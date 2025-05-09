@@ -4,15 +4,17 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
+	"log"
+	"math/rand/v2"
+	"strconv"
+	"sync"
+	"time"
+
 	"github.com/bwmarrin/snowflake"
 	"github.com/pkg/errors"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/extra/bundebug"
-	"math/rand/v2"
-	"strconv"
-	"sync"
-	"time"
 
 	_ "github.com/lib/pq"
 )
@@ -43,6 +45,14 @@ func NewDBWithTX(cfg DatabaseConfig) (*TxDB, func(), error) {
 		txMap: map[string]*bun.Tx{},
 	}
 	return &txdb, deferFunc, err
+}
+
+func NewMigrationDB(cfg DatabaseConfig) *bun.DB {
+	bunDB, _, err := connect(cfg)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return bunDB
 }
 
 func connect(cfg DatabaseConfig) (*bun.DB, func(), error) {

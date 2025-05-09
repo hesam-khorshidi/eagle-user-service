@@ -1,10 +1,11 @@
 package idgen
 
 import (
-	"github.com/bwmarrin/snowflake"
 	"log"
-	"weasel/internal/shared/domain/valueobject"
-	"weasel/internal/shared/port/inbound"
+
+	"github.com/bwmarrin/snowflake"
+	"github.com/hesam-khorshidi/eagle-user-service/internal/shared/core/domain/valueobject"
+	"github.com/hesam-khorshidi/eagle-user-service/internal/shared/core/port/inbound"
 )
 
 var _ inbound.IDGenerator = (*Service)(nil)

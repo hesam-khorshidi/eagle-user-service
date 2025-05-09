@@ -3,6 +3,7 @@ package infra
 import (
 	"context"
 	"errors"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/healthcheck"
@@ -38,20 +39,20 @@ var failedStatuses = []int{http.StatusBadRequest, http.StatusInternalServerError
 func WithTransaction(txDB *TxDB) fiber.Handler {
 	return func(c *fiber.Ctx) error {
 		var err error
-		txerr := txDB.RunInTransaction(c.Context(), func(ctx context.Context) bool {
-			c.Locals("tx", ctx.Value("tx"))
 
+		txErr := txDB.RunInTransaction(c.Context(), func(ctx context.Context) bool {
+			c.SetUserContext(ctx)
 			err = c.Next()
+
 			if err != nil {
 				return false
 			}
-
 			if slices.Contains(failedStatuses, c.Response().StatusCode()) {
 				return false
 			}
-
 			return true
 		})
-		return errors.Join(err, txerr)
+
+		return errors.Join(err, txErr)
 	}
 }

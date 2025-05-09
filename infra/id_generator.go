@@ -1,8 +1,8 @@
 package infra
 
 import (
-	"weasel/internal/shared/port/inbound"
-	"weasel/internal/shared/service/idgen"
+	"github.com/hesam-khorshidi/eagle-user-service/internal/shared/core/port/inbound"
+	"github.com/hesam-khorshidi/eagle-user-service/internal/shared/core/service/idgen"
 )
 
 type IDGeneratorConfig struct {

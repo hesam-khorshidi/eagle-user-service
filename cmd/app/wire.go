@@ -4,11 +4,23 @@
 package app
 
 import (
+	"log/slog"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/google/wire"
-	"weasel/config"
-	"weasel/infra"
-	shareddom "weasel/internal/shared/adapter/inbound/http"
+	"github.com/hesam-khorshidi/eagle-user-service/config"
+	"github.com/hesam-khorshidi/eagle-user-service/infra"
+
+	errorsrv "github.com/hesam-khorshidi/eagle-user-service/internal/shared/core/service/errors"
+	logsrv "github.com/hesam-khorshidi/eagle-user-service/internal/shared/core/service/log"
+
+	shareddom "github.com/hesam-khorshidi/eagle-user-service/internal/shared/adapter/inbound/http"
+	sharedinbound "github.com/hesam-khorshidi/eagle-user-service/internal/shared/core/port/inbound"
+
+	userrepo "github.com/hesam-khorshidi/eagle-user-service/internal/user/adapter/outbound/sql/user"
+	userinbound "github.com/hesam-khorshidi/eagle-user-service/internal/user/core/port/inbound"
+	useroutound "github.com/hesam-khorshidi/eagle-user-service/internal/user/core/port/outbound"
+	usersrv "github.com/hesam-khorshidi/eagle-user-service/internal/user/core/service/user"
 )
 
 var infraSet = wire.NewSet(
@@ -24,13 +36,20 @@ var configSet = wire.NewSet(
 	provideIDGeneratorConfig,
 	provideHttpServerConfig,
 	provideDatabaseConfig,
+	provideLoggingLevel,
 )
 
 var inboundSet = wire.NewSet()
 
-var serviceSet = wire.NewSet()
+var serviceSet = wire.NewSet(
+	logsrv.New, wire.Bind(new(sharedinbound.LogService), new(logsrv.Service)),
+	errorsrv.New, wire.Bind(new(sharedinbound.ErrorService), new(errorsrv.Service)),
+	usersrv.New, wire.Bind(new(userinbound.UserService), new(usersrv.Service)),
+)
 
-var outboundSet = wire.NewSet()
+var outboundSet = wire.NewSet(
+	userrepo.New, wire.Bind(new(useroutound.UserRepository), new(userrepo.Repository)),
+)
 
 func InitHttp(_ config.Config) (Http, func(), error) {
 	wire.Build(infraSet, configSet, provideHttp)
@@ -73,6 +92,21 @@ func provideHttpServerConfig(cfg config.Config) infra.HTTPServerConfig {
 func provideIDGeneratorConfig(cfg config.Config) infra.IDGeneratorConfig {
 	return infra.IDGeneratorConfig{
 		NodeID: cfg.IdGeneratorNodeID,
+	}
+}
+
+func provideLoggingLevel(cfg config.Config) slog.Level {
+	switch cfg.LoggingLevel {
+	case "debug":
+		return slog.LevelDebug
+	case "info":
+		return slog.LevelInfo
+	case "warn", "warning":
+		return slog.LevelWarn
+	case "error":
+		return slog.LevelError
+	default:
+		return slog.LevelInfo
 	}
 }
 

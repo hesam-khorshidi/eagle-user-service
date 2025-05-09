@@ -2,13 +2,14 @@ package app
 
 import (
 	"fmt"
-	"github.com/gofiber/fiber/v2"
-	"github.com/spf13/cobra"
 	"log/slog"
 	"os"
 	"os/signal"
 	"syscall"
-	"weasel/config"
+
+	"github.com/gofiber/fiber/v2"
+	"github.com/hesam-khorshidi/eagle-user-service/config"
+	"github.com/spf13/cobra"
 )
 
 type Http struct {

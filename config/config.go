@@ -2,11 +2,12 @@ package config
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/fsnotify/fsnotify"
 	"github.com/go-playground/validator"
 	"github.com/pkg/errors"
 	"github.com/spf13/viper"
-	"time"
 )
 
 type Config struct {
