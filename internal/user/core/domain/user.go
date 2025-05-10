@@ -10,7 +10,6 @@ type User struct {
 	ID          sharedvo.ID
 	CreatedAt   time.Time
 	UpdatedAt   time.Time
-	Username    string
 	Password    string
 	Email       string
 	DisplayName string

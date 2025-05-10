@@ -21,6 +21,8 @@ import (
 	userinbound "github.com/hesam-khorshidi/eagle-user-service/internal/user/core/port/inbound"
 	useroutound "github.com/hesam-khorshidi/eagle-user-service/internal/user/core/port/outbound"
 	usersrv "github.com/hesam-khorshidi/eagle-user-service/internal/user/core/service/user"
+
+	authoutbound "github.com/hesam-khorshidi/eagle-user-service/internal/auth/core/port/outbound"
 )
 
 var infraSet = wire.NewSet(
@@ -45,6 +47,7 @@ var serviceSet = wire.NewSet(
 	logsrv.New, wire.Bind(new(sharedinbound.LogService), new(logsrv.Service)),
 	errorsrv.New, wire.Bind(new(sharedinbound.ErrorService), new(errorsrv.Service)),
 	usersrv.New, wire.Bind(new(userinbound.UserService), new(usersrv.Service)),
+	wire.Bind(new(authoutbound.UserService), new(usersrv.Service)),
 )
 
 var outboundSet = wire.NewSet(

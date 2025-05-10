@@ -67,6 +67,13 @@ func SuccessWithListMeta(ctx *fiber.Ctx, data any, totalCount int) error {
 	return SuccessWithMeta(ctx, data, ListMeta{TotalCount: totalCount})
 }
 
+func Created(ctx *fiber.Ctx, data any) error {
+	return ctx.Status(http.StatusCreated).JSON(Response{
+		Success: true,
+		Data:    data,
+	})
+}
+
 func NoContent(ctx *fiber.Ctx) error {
 	return ctx.SendStatus(http.StatusNoContent)
 }

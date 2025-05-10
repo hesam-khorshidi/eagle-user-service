@@ -3,12 +3,10 @@ package infra
 import (
 	"context"
 	"errors"
-
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/healthcheck"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-
 	"net/http"
 	"slices"
 )
