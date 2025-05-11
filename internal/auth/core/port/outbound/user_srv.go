@@ -2,6 +2,7 @@ package outbound
 
 import (
 	"context"
+
 	"github.com/hesam-khorshidi/eagle-user-service/internal/user/core/domain"
 	"github.com/hesam-khorshidi/eagle-user-service/internal/user/core/domain/valueobject"
 )

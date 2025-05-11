@@ -12,12 +12,19 @@ type Service struct {
 	errorSrv sharedinbound.ErrorService
 	logSrv   sharedinbound.LogService
 	userRepo outbound.UserRepository
+	idGen    sharedinbound.IDGenerator
 }
 
-func New(userRepo outbound.UserRepository, errorSrv sharedinbound.ErrorService, logSrv sharedinbound.LogService) Service {
-	return Service{
+func New(
+	userRepo outbound.UserRepository,
+	errorSrv sharedinbound.ErrorService,
+	logSrv sharedinbound.LogService,
+	idGen sharedinbound.IDGenerator,
+) *Service {
+	return &Service{
 		userRepo: userRepo,
 		errorSrv: errorSrv,
 		logSrv:   logSrv,
+		idGen:    idGen,
 	}
 }

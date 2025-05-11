@@ -8,6 +8,6 @@ var _ inbound.ErrorService = (*Service)(nil)
 
 type Service struct{}
 
-func New() Service {
-	return Service{}
+func New() *Service {
+	return &Service{}
 }

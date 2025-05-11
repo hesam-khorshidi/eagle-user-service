@@ -9,13 +9,13 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (s Service) FindBy(ctx context.Context, field valueobject.UserField, value any) (*domain.User, error) {
+func (s *Service) FindBy(ctx context.Context, field valueobject.UserField, value any) (*domain.User, error) {
 	user, err := s.userRepo.FindBy(ctx, field, value)
 	if err != nil {
 		if errors.Is(err, sharederr.ErrEntityNotFound) {
-			return nil, s.errorSrv.NewRawError(ctx, err, "user service")
+			return nil, s.errorSrv.NewError(ctx, err, sharederr.ErrKindNotFound, "user service")
 		}
-		return nil, s.errorSrv.NewReportableError(ctx, err, "user service")
+		return nil, s.errorSrv.NewError(ctx, err, sharederr.ErrKindInternal, "user service")
 	}
 	return user, nil
 }

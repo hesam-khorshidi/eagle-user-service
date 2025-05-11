@@ -12,7 +12,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (r Repository) FindBy(ctx context.Context, field valueobject.UserField, value any) (*domain.User, error) {
+func (r *Repository) FindBy(ctx context.Context, field valueobject.UserField, value any) (*domain.User, error) {
 	db, dbErr := r.db.GetTX(ctx, nil)
 	if dbErr != nil {
 		return nil, errors.Wrap(dbErr, "error on user repository")

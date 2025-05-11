@@ -5,7 +5,8 @@ import (
 )
 
 type Dependencies struct {
-	Fiber  *fiber.App
-	Prefix string
-	Debug  bool
+	Fiber          *fiber.App
+	Prefix         string
+	Debug          bool
+	AuthMiddleware fiber.Handler
 }

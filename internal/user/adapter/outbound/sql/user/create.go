@@ -8,7 +8,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (r Repository) Create(ctx context.Context, user domain.User) error {
+func (r *Repository) Create(ctx context.Context, user domain.User) error {
 	db, dbErr := r.db.GetTX(ctx, nil)
 	if dbErr != nil {
 		return errors.Wrap(dbErr, "error on user repository")

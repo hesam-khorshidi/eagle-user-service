@@ -30,6 +30,10 @@ type Config struct {
 	DatabaseSSLMode  string `mapstructure:"database_ssl_mode" validate:"required,oneof=disable"`
 	DatabaseTimezone string `mapstructure:"database_timezone" validate:"required"`
 
+	RedisHost     string `mapstructure:"redis_host" validate:"required"`
+	RedisPort     string `mapstructure:"redis_port" validate:"required,min=1,max=65535"`
+	RedisPassword string `mapstructure:"redis_password" validate:"required"`
+
 	LoggingEnabled bool   `mapstructure:"logging_enabled" validate:"required"`
 	LoggingLevel   string `mapstructure:"logging_level" validate:"oneof=debug info warn error"`
 	LoggingFormat  string `mapstructure:"logging_format" validate:"oneof=json text"`

@@ -11,7 +11,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (r Repository) Update(ctx context.Context, user domain.User, fields ...valueobject.UserField) error {
+func (r *Repository) Update(ctx context.Context, user domain.User, fields ...valueobject.UserField) error {
 	db, dbErr := r.db.GetTX(ctx, nil)
 	if dbErr != nil {
 		return errors.Wrap(dbErr, "error on user repository")

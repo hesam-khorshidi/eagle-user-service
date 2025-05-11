@@ -13,7 +13,6 @@ type User struct {
 	ID            int64     `bun:"id,pk"`
 	CreatedAt     time.Time `bun:"created_at"`
 	UpdatedAt     time.Time `bun:"updated_at"`
-	Username      string    `bun:"username"`
 	Password      string    `bun:"password"`
 	Email         string    `bun:"email"`
 	DisplayName   string    `bun:"display_name"`

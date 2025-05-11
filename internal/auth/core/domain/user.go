@@ -1,9 +1,10 @@
 package domain
 
 import (
+	"time"
+
 	sharedvo "github.com/hesam-khorshidi/eagle-user-service/internal/shared/core/domain/valueobject"
 	userdomain "github.com/hesam-khorshidi/eagle-user-service/internal/user/core/domain"
-	"time"
 )
 
 type User struct {

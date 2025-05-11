@@ -13,8 +13,8 @@ type Service struct {
 	logger *slog.Logger
 }
 
-func New(level slog.Level) Service {
+func New(level slog.Level) *Service {
 	handler := slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{Level: level})
 	logger := slog.New(handler)
-	return Service{logger: logger}
+	return &Service{logger: logger}
 }

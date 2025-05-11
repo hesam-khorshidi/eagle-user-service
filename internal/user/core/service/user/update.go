@@ -9,13 +9,13 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (s Service) Update(ctx context.Context, user domain.User, fields ...valueobject.UserField) error {
+func (s *Service) Update(ctx context.Context, user domain.User, fields ...valueobject.UserField) error {
 	err := s.userRepo.Update(ctx, user, fields...)
 	if err != nil {
 		if errors.Is(err, sharederr.ErrEntityNotFound) {
-			return s.errorSrv.NewRawError(ctx, err, "user service")
+			return s.errorSrv.NewError(ctx, err, sharederr.ErrKindNotFound, "user service")
 		}
-		return s.errorSrv.NewReportableError(ctx, err, "user service")
+		return s.errorSrv.NewError(ctx, err, sharederr.ErrKindInternal, "user service")
 	}
 	return nil
 }

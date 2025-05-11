@@ -3,12 +3,13 @@ package infra
 import (
 	"context"
 	"errors"
+	"net/http"
+	"slices"
+
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/healthcheck"
 	"github.com/gofiber/fiber/v2/middleware/recover"
-	"net/http"
-	"slices"
 )
 
 type HTTPServerConfig struct {

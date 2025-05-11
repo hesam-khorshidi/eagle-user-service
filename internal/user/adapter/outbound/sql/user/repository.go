@@ -11,6 +11,6 @@ type Repository struct {
 	db *infra.TxDB
 }
 
-func New(db *infra.TxDB) Repository {
-	return Repository{db: db}
+func New(db *infra.TxDB) *Repository {
+	return &Repository{db: db}
 }

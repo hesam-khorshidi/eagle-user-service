@@ -7,9 +7,9 @@ import (
 )
 
 type RedisConfig struct {
-	Password string
 	Host     string
 	Port     string
+	Password string
 }
 
 func NewRedisClient(cfg RedisConfig) (*redis.Client, func(), error) {

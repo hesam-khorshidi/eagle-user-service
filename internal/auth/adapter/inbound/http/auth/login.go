@@ -10,14 +10,14 @@ type LoginRequest struct {
 	Password string `json:"password"`
 }
 
-func (c Controller) Login(ctx *fiber.Ctx) error {
+func (c *Controller) Login(ctx *fiber.Ctx) error {
 	var request LoginRequest
 	if err := ctx.BodyParser(&request); err != nil {
 		return http.BadRequest(ctx, err)
 	}
 	token, err := c.authService.Login(ctx.UserContext(), request.Email, request.Password)
 	if err != nil {
-		return http.InternalError(ctx, err)
+		return http.DetermineErrorCode(ctx, err)
 	}
 	return http.Success(ctx, token)
 }
